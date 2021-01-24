@@ -1,4 +1,4 @@
-<table id="text" class="table table-bordered">
+<table id="test_block" class="table table-bordered">
     <thead class="thead-dark"><tr>
         <th scope="col">id</th>
         <th scope="col">Firs name</th>
