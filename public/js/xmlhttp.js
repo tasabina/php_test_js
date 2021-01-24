@@ -18,70 +18,70 @@ function getXMLHttp() {
     return XMLHttp;
 }
 
-    var XMLHttp = getXMLHttp();
-    XMLHttp.open("GET","data/data.json");
-    XMLHttp.onreadystatechange = addData();
-    XMLHttp.send(null);
+var XMLHttp = getXMLHttp();
+XMLHttp.open("GET","data/data.json");
+XMLHttp.onreadystatechange = addData();
+XMLHttp.send(null);
 
-    function createTable(data) {
-        var table = document.createElement('table');
-        var thead = document.createElement('thead');
+function createTable(data) {
+    var table = document.createElement('table');
+    var thead = document.createElement('thead');
+    var tr = document.createElement('tr');
+    for ( var i=0; i < data.length; i++){
+        var th = document.createElement('th');
+        var newText = document.createTextNode(data[0],[i]);
+        th.appendChild(newText);
+        tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+    for ( var i = 1; i < data.length; i++){
         var tr = document.createElement('tr');
-        for ( var i=0; i < data.length; i++){
-            var th = document.createElement('th');
-            var newText = document.createTextNode(data[0],[i]);
-            th.appendChild(newText);
-            tr.appendChild(th);
+        for ( var j = 0; j < data[i].length; j++){
+            var td = document.createElement('td');
+            var newText = document.createTextNode(data[i][j]);
+            td.appendChild(newText);
+            tr.appendChild(td);
         }
-        thead.appendChild(tr);
-        table.appendChild(thead);
-
-        var tbody = document.createElement('tbody');
-        for ( var i = 1; i < data.length; i++){
-            var tr = document.createElement('tr');
-            for ( var j = 0; j < data[i].length; j++){
-                var td = document.createElement('td');
-                var newText = document.createTextNode(data[i][j]);
-                td.appendChild(newText);
-                tr.appendChild(td);
-            }
-            tbody.appendChild(tr);
-        }
-        table.appendChild(tbody);
-        return table;
-
+        tbody.appendChild(tr);
     }
-    function addData() {
-        if (XMLHttp.readyState == 4) {
-            var json = XMLHttp.responseText;
-            var data = JSON.parse(json);
-            console.log(data);
+    table.appendChild(tbody);
+    return table;
 
-            var list = document.getElementById("text");
-            var newNode = list.appendChild(document.createElement('tr'));
-            var maxAmount = list.getElementsByTagName("tr").length;
-            var newData = data[maxAmount-1];
+}
+function addData() {
+    if (XMLHttp.readyState == 4) {
+        var json = XMLHttp.responseText;
+        var data = JSON.parse(json);
+        console.log(data);
 
-            for( var key in data ){
-                var lenInTab = key;
-            }
-            console.log(lenInTab);
+        var list = document.getElementById("text");
+        var newNode = list.appendChild(document.createElement('tr'));
+        var maxAmount = list.getElementsByTagName("tr").length;
+        var newData = data[maxAmount-1];
 
-            if (maxAmount > lenInTab){
-                alert("There is nothing in the DataBase!");
-            }else {
-                newNode.innerHTML = "<td>" + newData.id +
-                    "</td><td>" + newData.first_name +
-                    "</td><td>" + newData.last_name +
-                    "</td><td>" + newData.email +
-                    "</td><td>" + newData.gender +
-                    "</td><td>" + newData.ip_address +
-                    "</td><td>" + newData.company +
-                    "</td><td>" + newData.city +
-                    "</td><td>" + newData.title +
-                    "</td><td>" + newData.website + "</td>";
-            }
+        for( var key in data ){
+            var lenInTab = key;
+        }
+        console.log(lenInTab);
+
+        if (maxAmount > lenInTab){
+            alert("There is nothing in the DataBase!");
+        }else {
+            newNode.innerHTML = "<td>" + newData.id +
+                "</td><td>" + newData.first_name +
+                "</td><td>" + newData.last_name +
+                "</td><td>" + newData.email +
+                "</td><td>" + newData.gender +
+                "</td><td>" + newData.ip_address +
+                "</td><td>" + newData.company +
+                "</td><td>" + newData.city +
+                "</td><td>" + newData.title +
+                "</td><td>" + newData.website + "</td>";
         }
     }
-    var add_block = document.getElementById("add_block");
-    add_block.addEventListener("click", addData, false);
+}
+var add_block = document.getElementById("add_block");
+add_block.addEventListener("click", addData, false);
